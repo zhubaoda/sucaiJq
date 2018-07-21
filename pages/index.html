@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>html</title>
+<link rel="stylesheet" type="text/css" href="../style/main.css"/>
+<link rel="stylesheet" type="text/css" href="../style/index.css"/>
+<link rel="stylesheet" type="text/css" href="../style/iconfont/iconfont.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://jq22.qiniudn.com/masonry-docs.min.js"></script>
+<script src="../static/js/jqpaginator.min.js"></script>
+<!--http://jqpaginator.keenwon.com/-->
+</head>
+<body>
+	<div class="home">
+		<header class="header">
+			<div class="headtop display-row-box">
+				<img src="../static/icon/logo.png" class="logo"/>
+				<div class="headtop-title">
+					<p>开始设计</p>
+				</div>
+				<div class="headtop-title">
+					<p>照片编辑</p>
+				</div>
+				<div class="headtop-title">
+					<p>在线印刷</p>
+				</div>
+				<div class="headtop-title">
+					<p>素材库</p>
+				</div>
+				<div class="headtop-title">
+					<p>特色功能</p>
+					<div class="drop-down dropdown-active" style="width: 104px">
+						<div class="drop-down-arrow"></div>
+						<p class="drop-list">
+							<i class="iconfont icon-sheji"></i>
+							<span>设计</span>
+						</p>
+						<p class="drop-list">
+							<i class="iconfont icon-material"></i>
+							<span>素材</span>
+						</p>
+						<p class="drop-list">
+							<i class="iconfont icon-yinshua"></i>
+							<span>印刷</span>
+						</p>
+						<p class="drop-list">
+							<i class="iconfont icon-zhaopianbianjiqi"></i>
+							<span>照片编辑</span>
+						</p>
+					</div>
+				</div>
+				<div class="headtop-title">
+					<p>更多</p>
+					<div class="drop-down dropdown-active" style="width: 76px">
+						<div class="drop-down-arrow"></div>
+						<p class="drop-list">
+							<i></i>
+							<span>设计师招募</span>
+						</p>
+						<p class="drop-list">
+							<i></i>
+							<span>设计学院</span>
+						</p>
+						<p class="drop-list">
+							<i></i>
+							<span>SDK服务</span>
+						</p>
+					</div>
+				</div>
+				<p class="login login-title">
+					<span class="loginIt">登录&ensp;</span>/<span class="resigter">&ensp;注册</span>
+				</p>
+			</div>
+		</header>
+		<div class="layout">
+			<div id="masonry" class="container-fluid"></div>
+		</div>
+		<div class="layout layout-center" style="padding: 30px 0">
+			<div id="paginator"></div>
+		</div>
+		<div class="go-top">TOP</div>
+		<div class="black">
+			<div class="black-box">
+				<div class="login-box changebig-active">
+					<img src="../static/icon/cha.svg" class="cha"/>
+					<div class="login-inbox">					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../interfaces/index.js"></script>
+	<script type="text/javascript">
+		window.onload = async () => {
+		  // 初始化一些dom隐藏
+		  $('.drop-down').hide()
+		  $('.black').hide()
+			
+			// 点击回到顶部
+			$('.go-top').click(function (){
+				$('.home').animate({scrollTop: 0},'slow')
+			})
+			
+		  // 移入移出nav-title
+		  $('.headtop-title').mouseover(function () {
+			  $(this).find($('.drop-down')).show()		  
+		  })
+		  $('.headtop-title').mouseout(function () {
+		  	  $(this).find($('.drop-down')).hide()
+		  })
+		  
+		  // 弹出窗，登录和注册
+		  $('.loginIt').click(function () {
+			  $('.black').show()
+		  })
+		  $('.resigter').click(function () {
+		  	  $('.black').show()
+		  })
+      $('.cha').mouseover(function () {
+			  $(this).removeClass('rotate-nor').addClass('rotate-active')
+		  })
+		  $('.cha').mouseout(function () {
+		  	$(this).removeClass('rotate-active').addClass('rotate-nor')
+		  })
+		  $('.cha').click(function () {
+			 $('.black').hide()
+		  })
+	
+		  // 获取图片们
+		  let res = await this.getPhotos()
+		  let first = $('.water .main .box').length
+		  let maxlength = res.length
+		  if (!first) {
+			  for (let i = 0; i < maxlength; i++) {
+				  let box = $('<div></div>')
+				  let img = $('<img />')
+				  box.attr('class','box changebig-active')
+				  img.attr('src', '..' + res[i].src)
+					let ratio = (img[0].height) / (img[0].width) 
+					let height = Math.ceil(ratio * 269)
+					box.css('height', height + 'px')
+				  box.append(img)
+					box.mouseover(function () {
+						img.css({
+							'position': 'absolute',
+							'width': '269px',
+							'margin-top': '-5px',
+							'box-shadow': '0px 5px 5px rgba(0,0,0,.3)',
+							'transition': 'all 1.5'
+						})
+					})
+					box.mouseout(function () {
+						img.css({
+							'position': 'absolute',
+							'width': '269px',
+							'box-shadow': 'none',
+							'margin-top': '0'
+						})
+					})
+				  $('#masonry').append(box)
+			  }
+		  }
+
+	    $(function() {
+			  var $container = $('#masonry')
+			  $container.imagesLoaded(function() {
+					$container.masonry({
+						itemSelector: '.box',
+						isAnimated: true,
+					})
+			  })
+			})	 
+			$('#paginator').jqPaginator({
+					totalPages: 100,
+					visiblePages: 10,
+					currentPage: 1,
+					first: '<li class="page"><span>首页</span></li>',
+					prev: '<li class="page"><span>上一个</span></li>',
+					next: '<li class="page"><span>下一个</span></li>', 
+					page: '<li class="page"><span>{{page}}</span></li>',
+					last: '<li class="page"><span>尾页</span></li>',
+					onPageChange: function (num) {
+							$(this)[0].currentPage = num
+					}
+			})
+		}
+	</script>
+</body>
+</html>

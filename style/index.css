@@ -1,0 +1,74 @@
+.home {
+	position: relative;
+	font-size: 14px;
+	height: 100vh;
+	overflow: auto;
+}
+p {
+	cursor: pointer;
+}
+.header {
+	width: 100%;
+	height: 310px !important;
+	background: #fff url('../static/icon/banner.jpg') no-repeat 100% 100%;
+	position: relative;
+}
+.logo {
+	width: 114px;
+	height: 60px;
+	margin-right: 20px;
+}
+.headtop {
+	padding: 0 26px 0 50px;
+	position: relative;
+}
+.headtop-title {
+	padding: 22px 24px 18px;
+	line-height: 20px;
+	cursor: pointer;
+	position: relative;
+}
+.login-title {
+	padding: 22px 24px 18px;
+	line-height: 20px;
+	cursor: pointer;
+}
+.headtop-title:hover{
+	background-color: rgba(0,0,0,.9);
+	color: #fff;
+}
+.drop-down {
+	position: absolute;
+	box-sizing: border-box;	
+	top: 62px;
+	left: 0;
+	background-color: rgba(0,0,0,.9);
+	color: #fff;
+}
+.drop-down-arrow {
+	position: absolute;
+	border: 5px solid;
+	content: '';
+	left: 42%;
+	top: -5px;
+	border-color: transparent transparent rgba(0,0,0,.9) rgba(0,0,0,.9);
+	transform: rotate(135deg);
+}
+.drop-list {
+	padding: 5px 0;
+}
+.drop-list:hover {
+	background-color: rgba(225, 225, 225, 0.8);
+}
+.drop-list>i, .drop-list>span{
+	font-size: 12px;
+	color: #fff;
+}
+.drop-list>i {
+	font-size: 14px;
+	margin: 0 4px 0 7px;
+}
+.login {
+	position: absolute;
+	right: 10px;
+}
